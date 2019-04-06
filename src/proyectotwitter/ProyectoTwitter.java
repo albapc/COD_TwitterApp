@@ -1,5 +1,7 @@
 package proyectotwitter;
 
+import javax.swing.JOptionPane;
+import twitter4j.TwitterException;
 
 /**
  *
@@ -7,34 +9,44 @@ package proyectotwitter;
  */
 public class ProyectoTwitter {
 
-    /**
+    /**Método principal que contiene el menú principal, a través del cual se 
+     * utilizan los métodos pertenecientes a la otra clase dependiendo de la
+     * opción que elija el usuario.
+     * 
      * @param args the command line arguments
+     * @throws twitter4j.TwitterException
      */
-    public static void main(String[] args) {
-/*
-                //tuiteamos el mensaje que queramos
-        String latestStatus = "Hola";
-        Twitter twitter = TwitterFactory.getSingleton();
-        Status status = twitter.updateStatus(latestStatus);
-        System.out.println("Successfully updated the status to [" + status.getText() + "].");
+    public static void main(String[] args) throws TwitterException {
+        TwitterClass tw = new TwitterClass();
+        int opcion;
 
-        //traer la línea de tiempo (los últimos tuits)
-        twitter = TwitterFactory.getSingleton();
-        List<Status> statuses = twitter.getHomeTimeline();
-        System.out.println("Showing home timeline.");
-        for (Status st : statuses) {
-            System.out.println(status.getUser().getName() + ":"
-                    + status.getText());
-        }
+        do {
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(""
+                    + "**********MENÚ**********\n"
+                    + "Introduce una opción:\n"
+                    + "1.- Publicar un tuit\n"
+                    + "2.- Mostrar tu línea del tiempo (timeline)\n"
+                    + "3.- Buscar tuits\n"
+                    + "0.- Salir"));
 
-        //filtrar tuits (búsqueda)
-        twitter = TwitterFactory.getSingleton();
-        Query query = new Query("source: twitter4j yusukey");
-        QueryResult result = twitter.search(query);
-        for (Status st : result.getTweets()) {
-            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-        }
-        */
+            switch (opcion) {
+                case 1:
+                    tw.tuitear();
+                    break;
+                case 2:
+                    tw.mostrarTimeline();
+                    break;
+                case 3:
+                    tw.buscarTuits();
+                    break;
+                case 0:
+                    System.exit(0);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida.\n"
+                            + "Introduce un número del 0 al 3.");
+            }
+        } while (opcion != 0);
     }
 
 }

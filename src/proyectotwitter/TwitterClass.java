@@ -15,8 +15,7 @@ import twitter4j.TwitterFactory;
  */
 public class TwitterClass {
 
-    /**
-     * Método para que el usuario introduzca el mensaje que desea publicar en su
+    /** Método para que el usuario introduzca el mensaje que desea publicar en su
      * perfil de Twitter como estado
      *
      * @throws TwitterException lanza una excepción en caso de que haya un error
@@ -29,6 +28,12 @@ public class TwitterClass {
         System.out.println("Actualizado con éxito el estado: [" + status.getText() + "].");
     }
 
+    /** Método para que el usuario pueda ver la línea del tiempo que hay en la página
+     * principal de su cuenta
+     *
+     * @throws TwitterException lanza una excepción en caso de que haya un error
+     * durante el uso de la API
+     */
     public void mostrarTimeline() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         List<Status> statuses = twitter.getHomeTimeline();
@@ -39,9 +44,15 @@ public class TwitterClass {
         }
     }
     
+    /** Método que tiene como objetivo que el usuario pueda buscar los tuits que
+     * desee a partir de las palabras clave que ese introduzca
+     *
+     * @throws TwitterException lanza una excepción en caso de que haya un error
+     * durante el uso de la API
+     */
     public void buscarTuits() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
-        Query query = new Query("source: twitter4j yusukey");
+        Query query = new Query(JOptionPane.showInputDialog("Introduce tu búsqueda en Twitter"));
         QueryResult result = twitter.search(query);
         for (Status status : result.getTweets()) {
             System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
