@@ -1,5 +1,6 @@
 package proyectotwitter;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -12,17 +13,28 @@ import twitter4j.TwitterFactory;
  */
 public class TwitterClass {
 
-    /** Método para que el usuario introduzca el mensaje que desea publicar en su
+    /**
+     * Método para que el usuario introduzca el mensaje que desea publicar en su
      * perfil de Twitter como estado
      *
-     * @throws TwitterException lanza una excepción en caso de que haya un error durante
-     * la publicación del tuit (método updateStatus)
+     * @throws TwitterException lanza una excepción en caso de que haya un error
+     * durante la publicación del tuit (método updateStatus)
      */
     public void tuitear() throws TwitterException {
         String latestStatus = JOptionPane.showInputDialog("Introduce el tuit que deseas publicar");
         Twitter twitter = TwitterFactory.getSingleton();
         Status status = twitter.updateStatus(latestStatus);
-        System.out.println("Successfully updated the status to [" + status.getText() + "].");
+        System.out.println("Actualizado con éxito el estado: [" + status.getText() + "].");
+    }
+
+    public void mostrarTimeline() throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        List<Status> statuses = twitter.getHomeTimeline();
+        System.out.println("Mostrando línea del tiempo principal.");
+        for (Status status : statuses) {
+            System.out.println(status.getUser().getName() + ":"
+                    + status.getText());
+        }
     }
     
     
